@@ -77,7 +77,7 @@ import RecommendView from './childComps/RecommendView.vue'
 import FeatureView from './childComps/FeatureView'
 import TabControl from 'components/content/tabControl/TabControl.vue'
 
-import {getHomeMultidata} from 'network/home'
+import {getHomeMultidata, getHomeGoods} from 'network/home'
 
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/SwiperItem'
@@ -94,15 +94,37 @@ import {getHomeMultidata} from 'network/home'
     data(){
      return{
        banners:[],
-       recommends:[]
+       recommends:[],
+       goods:{
+        'pop':{page:0, list:[]},
+        'new':{page:0, list:[]},
+        'sell':{page:0, list:[]},
+       }
      }
     },
     created(){
       //请求多个数据
-      getHomeMultidata().then(res=>{
-        this.banners = res.data.banner.list;
-        this.recommends= res.data.recommend.list;
+     this.getHomeMultidata()
+      //请求商品数据
+     this.getHomeGoods('pop')
+     this.getHomeGoods('sell')
+     this.getHomeGoods('new')
+    },
+    methods:{
+      getHomeMultidata(){
+        getHomeMultidata().then(res=>{
+          this.banners = res.data.banner.list;
+          this.recommends= res.data.recommend.list;
       })
+      },
+      getHomeGoods(type){
+        const page = this.goods[type].page+1
+        getHomeGoods(type,page).then(res=>{
+          // console.log(res);
+          this.goods[type].list.push(...res.data.list)
+          this.goods[type].page+=1
+      })
+      }
     }
   }
 </script>
