@@ -4,6 +4,7 @@
   <home-swiper :banners="banners"></home-swiper>
   <recommend-view :recommends="recommends"></recommend-view>
   <feature-view></feature-view>
+  <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
   <ul>
     <li>1</li>
     <li>2</li>
@@ -17,7 +18,11 @@
     <li>2</li>
     <li>3</li>
     <li>4</li>
-        <li>1</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>1</li>
     <li>2</li>
     <li>3</li>
     <li>4</li>
@@ -29,7 +34,11 @@
     <li>2</li>
     <li>3</li>
     <li>4</li>
-        <li>1</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>1</li>
     <li>2</li>
     <li>3</li>
     <li>4</li>
@@ -41,19 +50,11 @@
     <li>2</li>
     <li>3</li>
     <li>4</li>
-        <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
     <li>1</li>
     <li>2</li>
     <li>3</li>
     <li>4</li>
     <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-        <li>1</li>
     <li>2</li>
     <li>3</li>
     <li>4</li>
@@ -74,6 +75,7 @@ import NavBar from 'components/common/navbar/NavBar.vue'
 import HomeSwiper from './childComps/HomeSwiper'
 import RecommendView from './childComps/RecommendView.vue'
 import FeatureView from './childComps/FeatureView'
+import TabControl from 'components/content/tabControl/TabControl.vue'
 
 import {getHomeMultidata} from 'network/home'
 
@@ -87,6 +89,7 @@ import {getHomeMultidata} from 'network/home'
       HomeSwiper,
       RecommendView,
       FeatureView,
+      TabControl,
     },
     data(){
      return{
@@ -115,6 +118,9 @@ import {getHomeMultidata} from 'network/home'
   right:0;
   top:0;
   z-index:9;
-
+}
+.tab-control{
+position:sticky;
+top:44px;
 }
 </style>
