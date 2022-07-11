@@ -5,7 +5,8 @@
   <recommend-view :recommends="recommends"></recommend-view>
   <feature-view></feature-view>
   <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-  <ul>
+  <goods-list :goods="goods['pop'].list" />
+  <!-- <ul>
     <li>1</li>
     <li>2</li>
     <li>3</li>
@@ -66,16 +67,19 @@
     <li>2</li>
     <li>3</li>
     <li>4</li>
-  </ul>
+  </ul> -->
 </div>
-</template>
+</template>s
 
 <script>
-import NavBar from 'components/common/navbar/NavBar.vue'
+
 import HomeSwiper from './childComps/HomeSwiper'
 import RecommendView from './childComps/RecommendView.vue'
 import FeatureView from './childComps/FeatureView'
+
+import NavBar from 'components/common/navbar/NavBar.vue'
 import TabControl from 'components/content/tabControl/TabControl.vue'
+import GoodsList from 'components/content/goods/GoodsList'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 
@@ -90,6 +94,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
       RecommendView,
       FeatureView,
       TabControl,
+      GoodsList,
     },
     data(){
      return{
