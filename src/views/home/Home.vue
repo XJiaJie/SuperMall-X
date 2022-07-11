@@ -4,72 +4,13 @@
   <home-swiper :banners="banners"></home-swiper>
   <recommend-view :recommends="recommends"></recommend-view>
   <feature-view></feature-view>
-  <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-  <goods-list :goods="goods['pop'].list" />
-  <!-- <ul>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-  </ul> -->
+  <tab-control class="tab-control" 
+              :titles="['流行','新款','精选']"
+              @tabClick="tabClick"/>
+  <goods-list :goods="showGoods" />
+
 </div>
-</template>s
+</template>
 
 <script>
 
@@ -96,6 +37,12 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
       TabControl,
       GoodsList,
     },
+    // 计算属性
+    computed:{
+      showGoods(){
+         return this.goods[this.currentType].list
+      }
+    },
     data(){
      return{
        banners:[],
@@ -104,7 +51,8 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
         'pop':{page:0, list:[]},
         'new':{page:0, list:[]},
         'sell':{page:0, list:[]},
-       }
+       },
+       currentType:'pop'
      }
     },
     created(){
@@ -112,10 +60,30 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
      this.getHomeMultidata()
       //请求商品数据
      this.getHomeGoods('pop')
-     this.getHomeGoods('sell')
      this.getHomeGoods('new')
+     this.getHomeGoods('sell')
     },
     methods:{
+      /**
+       * 事件监听相关方法
+      */
+      tabClick(index){
+        // console.log(index)
+          switch(index){
+          case 0:
+            this.currentType = 'pop'
+            break
+          case 1:
+             this.currentType= 'new'
+             break
+          case 2:
+             this.currentType = 'sell'
+             break
+        }
+      },
+      /**
+       * 网络请求相关的方法
+      */ 
       getHomeMultidata(){
         getHomeMultidata().then(res=>{
           this.banners = res.data.banner.list;
