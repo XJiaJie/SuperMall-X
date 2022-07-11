@@ -1,13 +1,17 @@
 <template>
 <div id="home">
   <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-  <home-swiper :banners="banners"></home-swiper>
-  <recommend-view :recommends="recommends"></recommend-view>
-  <feature-view></feature-view>
-  <tab-control class="tab-control" 
-              :titles="['流行','新款','精选']"
-              @tabClick="tabClick"/>
-  <goods-list :goods="showGoods" />
+
+  <scroll class="conent">
+    <home-swiper :banners="banners"></home-swiper>
+    <recommend-view :recommends="recommends"></recommend-view>
+    <feature-view></feature-view>
+    <tab-control class="tab-control" 
+                :titles="['流行','新款','精选']"
+                @tabClick="tabClick"/>
+    <goods-list :goods="showGoods" />
+  </scroll>
+
 
 </div>
 </template>
@@ -21,6 +25,7 @@ import FeatureView from './childComps/FeatureView'
 import NavBar from 'components/common/navbar/NavBar.vue'
 import TabControl from 'components/content/tabControl/TabControl.vue'
 import GoodsList from 'components/content/goods/GoodsList'
+import Scroll from 'components/common/scroll/Scroll'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 
@@ -36,6 +41,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
       FeatureView,
       TabControl,
       GoodsList,
+      Scroll,
     },
     // 计算属性
     computed:{
@@ -104,6 +110,8 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
 <style lang='' scoped>
 #home{
   padding-top:44px;
+  height:100vh;
+  position:relative;
 }
 .home-nav{
   background-color:var(--color-tint);
@@ -118,4 +126,14 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
 position:sticky;
 top:44px;
 }
+.conent{
+  overflow:hidden;
+  position:absolute;
+  top:44px;
+  bottom:49px;
+  left:0;
+  right:0.
+
+}
+
 </style>
