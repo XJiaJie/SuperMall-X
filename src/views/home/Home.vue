@@ -1,19 +1,22 @@
 <template>
 <div id="home">
   <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-
+  <tab-control :titles="['流行','新款','精选']"
+                @tabClick="tabClick"
+                ref="tabControl1"
+                class="tab-control" v-show="isTabFixed"/>
   <scroll class="conent" 
           ref="scroll" 
           :probeType="3" 
           @scroll="conentScroll"
           :pull-up-load="true"
           @pullingUp="loadMore">
-    <home-swiper :banners="banners"/>
+    <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
     <recommend-view :recommends="recommends"/>
     <feature-view/>
-    <tab-control class="tab-control" 
-                :titles="['流行','新款','精选']"
-                @tabClick="tabClick"/>
+    <tab-control :titles="['流行','新款','精选']"
+                @tabClick="tabClick"
+                ref="tabControl2"/>
     <goods-list :goods="showGoods" />
   </scroll>
     <back-top @click.native="backClick" v-show="isShowBackTop"/>
@@ -66,7 +69,9 @@ import { debounce } from 'common/utils'
         'sell':{page:0, list:[]},
        },
        currentType:'pop',
-       isShowBackTop:false
+       isShowBackTop:false,
+       tabOffsetTop:0,
+       isTabFixed:false
      }
     },
     //created作用组件创建完就开始监听
@@ -78,8 +83,9 @@ import { debounce } from 'common/utils'
      this.getHomeGoods('new')
      this.getHomeGoods('sell')
     },
+    //组件加载完成
     mounted(){
-      //监听item中的图片加载完成
+      //监听item中的图片加载完成的事件监听
       const refresh = debounce(this.$refs.scroll.refresh,50)
       this.$bus.$on('itemIamgeLoad',()=>{
         refresh()
@@ -102,16 +108,25 @@ import { debounce } from 'common/utils'
              this.currentType = 'sell'
              break
         }
+        this.$refs.tabControl1.currentIndex = index
+        this.$refs.tabControl2.currentIndex = index
       },
       backClick(){
         // 拿到scroll中的ref=scroll，在调用scroll中的scrollTo方法 一二参数x,y ，第三个参数500ms
         this.$refs.scroll.scrollTo(0,0)
       },
       conentScroll(position){
+        //判断BackTop是否显示
         this.isShowBackTop=(-position.y)>1000
+
+        //决定tabControl是否position：fixd
+        this.isTabFixed = (-position.y)>this.tabOffsetTop
       },
       loadMore(){
         this.getHomeGoods(this.currentType)
+      },
+      swiperImageLoad(){
+        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
       },
       /**
        * 网络请求相关的方法
@@ -138,23 +153,20 @@ import { debounce } from 'common/utils'
 </script>
 <style lang='' scoped>
 #home{
-  padding-top:44px;
+  /* padding-top:44px; */
   height:100vh; 
   position:relative;
 }
 .home-nav{
   background-color:var(--color-tint);
   color:#fff;
-  position:fixed;
+  /* position:fixed;
   left:0;
   right:0;
   top:0;
-  z-index:9;
+  z-index:9; */
 }
-.tab-control{
-position:sticky;
-top:44px;
-}
+
 .conent{
   overflow:hidden;
   position:absolute;
@@ -168,5 +180,8 @@ top:44px;
   overflow:hidden;
   margin-top:44px;
 } */
-
+.tab-control{
+position:relative;
+z-index:10;
+}
 </style>

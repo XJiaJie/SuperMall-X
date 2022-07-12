@@ -3,7 +3,7 @@
     <swiper-item v-for="(item,index) in banners" :key="index">
     <a :href="item.link">
     <!-- 动态绑定 属性加冒号 -->
-    <img :src="item.image" alt="">
+    <img :src="item.image" alt="" @load="imageLoad">
     </a>
     </swiper-item>
   </swiper>
@@ -20,6 +20,18 @@ import { Swiper,SwiperItem } from 'components/common/swiper'
                 return []
             }
         }
+    },
+    data(){
+      return{
+        isLoad:false
+      }
+    },
+    methods:{
+      imageLoad(){
+        if(!this.isLoad)
+        this.$emit('swiperImageLoad')
+        this.isLoad = true
+      }
     },
     components:{
         Swiper,
