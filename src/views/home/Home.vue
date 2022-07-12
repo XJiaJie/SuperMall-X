@@ -34,7 +34,7 @@ import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop.vue'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
-
+import { debounce } from 'common/utils'
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/SwiperItem'
 
@@ -69,13 +69,21 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
        isShowBackTop:false
      }
     },
+    //created作用组件创建完就开始监听
     created(){
-      //请求多个数据
+      //methods中的getHomeMultidata方法，来请求多个数据
      this.getHomeMultidata()
-      //请求商品数据
+      //methods中的getHomGoods方法，请求商品数据
      this.getHomeGoods('pop')
      this.getHomeGoods('new')
      this.getHomeGoods('sell')
+    },
+    mounted(){
+      //监听item中的图片加载完成
+      const refresh = debounce(this.$refs.scroll.refresh,50)
+      this.$bus.$on('itemIamgeLoad',()=>{
+        refresh()
+      })
     },
     methods:{
       /**
@@ -103,10 +111,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
         this.isShowBackTop=(-position.y)>1000
       },
       loadMore(){
-        //监听图片加载完
         this.getHomeGoods(this.currentType)
-        //重新刷新可滚动区的高度
-        this.$refs.scroll.refresh()
       },
       /**
        * 网络请求相关的方法
@@ -124,6 +129,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page+=1
 
+          //完成上拉加载更多
           this.$refs.scroll.finishPullUp()
       })
       }
