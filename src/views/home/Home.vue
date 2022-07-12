@@ -2,10 +2,15 @@
 <div id="home">
   <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
 
-  <scroll class="conent" ref="scroll" :probeType="3" @scroll="conentScroll">
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
+  <scroll class="conent" 
+          ref="scroll" 
+          :probeType="3" 
+          @scroll="conentScroll"
+          :pull-up-load="true"
+          @pullingUp="loadMore">
+    <home-swiper :banners="banners"/>
+    <recommend-view :recommends="recommends"/>
+    <feature-view/>
     <tab-control class="tab-control" 
                 :titles="['流行','新款','精选']"
                 @tabClick="tabClick"/>
@@ -97,6 +102,12 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
       conentScroll(position){
         this.isShowBackTop=(-position.y)>1000
       },
+      loadMore(){
+        //监听图片加载完
+        this.getHomeGoods(this.currentType)
+        //重新刷新可滚动区的高度
+        this.$refs.scroll.refresh()
+      },
       /**
        * 网络请求相关的方法
       */ 
@@ -112,6 +123,8 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
           // console.log(res);
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page+=1
+
+          this.$refs.scroll.finishPullUp()
       })
       }
     }
