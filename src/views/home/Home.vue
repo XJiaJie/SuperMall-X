@@ -2,7 +2,7 @@
 <div id="home">
   <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
 
-  <scroll class="conent">
+  <scroll class="conent" ref="scroll" :probeType="3" @scroll="conentScroll">
     <home-swiper :banners="banners"></home-swiper>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
@@ -11,7 +11,7 @@
                 @tabClick="tabClick"/>
     <goods-list :goods="showGoods" />
   </scroll>
-
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
 
 </div>
 </template>
@@ -26,6 +26,7 @@ import NavBar from 'components/common/navbar/NavBar.vue'
 import TabControl from 'components/content/tabControl/TabControl.vue'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
+import BackTop from 'components/content/backTop/BackTop.vue'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 
@@ -42,6 +43,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
       TabControl,
       GoodsList,
       Scroll,
+      BackTop,
     },
     // 计算属性
     computed:{
@@ -58,7 +60,8 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
         'new':{page:0, list:[]},
         'sell':{page:0, list:[]},
        },
-       currentType:'pop'
+       currentType:'pop',
+       isShowBackTop:false
      }
     },
     created(){
@@ -87,6 +90,13 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
              break
         }
       },
+      backClick(){
+        // 拿到scroll中的ref=scroll，在调用scroll中的scrollTo方法 一二参数x,y ，第三个参数500ms
+        this.$refs.scroll.scrollTo(0,0)
+      },
+      conentScroll(position){
+        this.isShowBackTop=(-position.y)>1000
+      },
       /**
        * 网络请求相关的方法
       */ 
@@ -110,7 +120,7 @@ import {getHomeMultidata, getHomeGoods} from 'network/home'
 <style lang='' scoped>
 #home{
   padding-top:44px;
-  height:100vh;
+  height:100vh; 
   position:relative;
 }
 .home-nav{
@@ -133,7 +143,11 @@ top:44px;
   bottom:49px;
   left:0;
   right:0.
-
 }
+/* .conent{
+  height:calc(100% - 93px);
+  overflow:hidden;
+  margin-top:44px;
+} */
 
 </style>
