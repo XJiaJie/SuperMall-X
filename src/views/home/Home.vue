@@ -71,8 +71,16 @@ import { debounce } from 'common/utils'
        currentType:'pop',
        isShowBackTop:false,
        tabOffsetTop:0,
-       isTabFixed:false
+       isTabFixed:false,
+       saveY:0
      }
+    },
+    activated(){
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.refresh()
+    },
+    deactivated(){
+      this.saveY= this.$refs.scroll.getSaveY()
     },
     //created作用组件创建完就开始监听
     created(){
