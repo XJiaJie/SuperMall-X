@@ -43,19 +43,19 @@
     border-bottom:5px solid #f2f5f8;
 }
 .info-title{
-  font-size:16px;
+  font-size:14px;
   color:black;
 }
 .info-price{
-  margin:10px 10px
+  /* margin:10px 10px */
 }
 .n-price{
-  font-size:18px;
-}
-.o-price{
   font-size:20px;
   color:var(--color-high-text);
-
+}
+.o-price{
+  font-size:12px;
+  text-decoration:line-through; 
 }
 .info-other{
   display:flex;
@@ -64,7 +64,7 @@
   margin-right:10px;
 }
 .info-service{
-  margin-top:10px;
+  margin-top:5px;
   display:flex;
   font-size:14px
 }

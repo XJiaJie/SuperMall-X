@@ -3,13 +3,15 @@
     <detail-nav-bar></detail-nav-bar>
     <detail-swiper :top-images="topImages"/>
     <detail-base-info :goods="goods"/>
+    <detail-shop-info :shop="shop"/>
   </div>
 </template>
 
 <script>
 import DetailNavBar from './childComps/DetailNavBar'
-import DetailSwiper from './childComps/DetailSwiper.vue'
-import DetailBaseInfo from './childComps/DetailBaseInfo.vue'
+import DetailSwiper from './childComps/DetailSwiper'
+import DetailBaseInfo from './childComps/DetailBaseInfo'
+import DetailShopInfo from './childComps/DetailShopInfo'
 
 import { getDetail, Goods,Shop } from 'network/detail'
 
@@ -27,7 +29,8 @@ import { getDetail, Goods,Shop } from 'network/detail'
     components:{
         DetailNavBar,
         DetailSwiper,
-        DetailBaseInfo
+        DetailBaseInfo,
+        DetailShopInfo
     },
     created(){
         //保存传入iid
