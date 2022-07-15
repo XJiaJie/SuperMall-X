@@ -1,7 +1,7 @@
 <template>
     <swiper class="swiper-item">
         <swiper-item v-for="(item,index) in topImages" :key="index">
-            <img :src="item" alt="">
+            <img :src="item" alt="" >
         </swiper-item>
     </swiper>
 </template>
@@ -10,7 +10,7 @@
 import { Swiper,SwiperItem } from 'components/common/swiper'
 
   export default {
-    name:'',
+    name:'DetailSwiper',
     props:{
     topImages:{
         type:Array,

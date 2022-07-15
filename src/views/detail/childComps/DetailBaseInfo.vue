@@ -38,8 +38,8 @@
 <style lang='' scoped>
 .base-info{
     margin-top:10px;
-    padding: 0 8px;
-    /* color:#999; */
+    padding: 0 0 20px 0;
+    color:#999;
     border-bottom:5px solid #f2f5f8;
 }
 .info-title{
@@ -47,7 +47,8 @@
   color:black;
 }
 .info-price{
-  /* margin:10px 10px */
+margin-top:10px;
+margin-left:10px;
 }
 .n-price{
   font-size:20px;
@@ -59,19 +60,33 @@
 }
 .info-other{
   display:flex;
+  text-align:center;
+  padding:20px 12px;
+  border-bottom:5px solid #f2f5f8;
+  font-size:14px;
 }
 .info-other span{
-  margin-right:10px;
+  flex:1;
 }
 .info-service{
-  margin-top:5px;
+  margin-top:10px;
   display:flex;
-  font-size:14px
+  font-size:10px;
+  text-align:center;
+}
+.info-service-item{
+  flex:1
 }
 .info-service img{
   width:15px;
   height:15px;
   background-color:pink;
   border-radius:50%;
+}
+.discount{
+  padding:4px;
+  font-size:16px;
+  background-color:pink;
+  border-radius:10px;
 }
 </style>

@@ -57,14 +57,15 @@
 </script>
 <style lang='' scoped>
 .shop-info{
-    padding: 10px 8px;
+    padding: 20px 8px;
     border-bottom:5px solid #f2f5f8;
 }
 .shop-top{
-    line-height:45px;
+    line-height:50px;
     /* 让元素垂直中心对齐 */
     display:flex;
     align-items:center;
+
 }
 .shop-top img{
     width:45px;
@@ -77,7 +78,7 @@
     vertical-align:center;
 }
 .shop-middle{
-    margin-top:-4px;
+    margin-top:10px;
     display:flex;
     align-items:center;
 }
@@ -124,8 +125,11 @@ color:#5ea732
     background-color:#f13e3a;
 }
 .shop-bottom{
-    margin-top:-4px;
-    margin-left:16px;
-    color:var(--color-high-text)
+    width:70px;
+    margin:2px auto;
+    text-align:center;
+    color:var(--color-high-text);
+    background-color:pink;
+    border-radius:5px;
 }
 </style>

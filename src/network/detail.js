@@ -8,7 +8,7 @@ export function getDetail(iid){
         }
     })
 }
-
+// 面向对象封装思想，构建一个类。
 export class Goods {
     constructor(itemInfo, columns, services) {
       this.title = itemInfo.title;

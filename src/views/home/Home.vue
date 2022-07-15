@@ -181,7 +181,7 @@ import { debounce } from 'common/utils'
   top:44px;
   bottom:49px;
   left:0;
-  right:0.
+  right:0;
 }
 /* .conent{
   height:calc(100% - 93px);
