@@ -7,6 +7,8 @@
       <detail-shop-info :shop="shop"/>
       <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad"/>
       <detail-param-info :paramInfo="paramInfo"/>
+      <detail-comment-info :comment-info="commentInfo"/>
+      <goods-list :goods="recommeds"/>
 </scroll>
   </div>
 </template>
@@ -18,10 +20,13 @@ import DetailBaseInfo from './childComps/DetailBaseInfo'
 import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
+import DetailCommentInfo from './childComps/DetailCommentInfo'
 
 import Scroll from 'components/common/scroll/Scroll'
+import GoodsList from 'components/content/goods/GoodsList'
+import {itemListenerMixin} from 'common/mixin'
 
-import { getDetail, Goods,Shop ,GoodsParam} from 'network/detail'
+import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
 
   export default {
     name:'Detail',
@@ -33,8 +38,11 @@ import { getDetail, Goods,Shop ,GoodsParam} from 'network/detail'
             shop:{},
             detailInfo:{},
             paramInfo:{},
+            commentInfo:{},
+            recommeds:[],
         }
     },
+    mixins:[itemListenerMixin],
     components:{
         DetailNavBar,
         DetailSwiper,
@@ -42,6 +50,8 @@ import { getDetail, Goods,Shop ,GoodsParam} from 'network/detail'
         DetailShopInfo,
         DetailGoodsInfo,
         DetailParamInfo,
+        DetailCommentInfo,
+        GoodsList,
         Scroll,
     },
     created(){
@@ -67,8 +77,21 @@ import { getDetail, Goods,Shop ,GoodsParam} from 'network/detail'
 
         //获取参数信息
         this.paramInfo=new GoodsParam(data.itemParams.info, data.itemParams.rule)
-        })
 
+        //取出评论信息
+        if(data.rate.cRate !==0){
+          this.commentInfo = data.rate.list[0]
+        }
+        })
+        //请求推荐数据
+        getRecommend().then(res=>{
+          this.recommeds=res.data.list
+        })
+    },
+    mounted(){
+    },
+    destroyed(){
+      this.$bus.$off('itemIamgeLoad',this.itemImgListener)
     },
     methods:{
       //监听加载完成，进行高度上的刷新

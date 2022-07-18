@@ -8,6 +8,12 @@ export function getDetail(iid){
         }
     })
 }
+
+export function getRecommend(){
+    return request({
+        url:'/recommend'
+    })
+}
 // 面向对象封装思想，构建一个类。
 export class Goods {
     constructor(itemInfo, columns, services) {

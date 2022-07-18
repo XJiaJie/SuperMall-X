@@ -37,7 +37,7 @@ import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop.vue'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
-import { debounce } from 'common/utils'
+import {itemListenerMixin} from 'common/mixin'
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/SwiperItem'
 
@@ -59,6 +59,7 @@ import { debounce } from 'common/utils'
          return this.goods[this.currentType].list
       }
     },
+    mixins:[itemListenerMixin],
     data(){
      return{
        banners:[],
@@ -72,7 +73,7 @@ import { debounce } from 'common/utils'
        isShowBackTop:false,
        tabOffsetTop:0,
        isTabFixed:false,
-       saveY:0
+       saveY:0,
      }
     },
     activated(){
@@ -80,7 +81,11 @@ import { debounce } from 'common/utils'
       this.$refs.scroll.refresh()
     },
     deactivated(){
+      //保存Y值
       this.saveY= this.$refs.scroll.getSaveY()
+      //取消全局事件的监听
+
+      this.$bus.$off('itemIamgeLoad',this.itemImgListener )
     },
     //created作用组件创建完就开始监听
     created(){
@@ -93,11 +98,6 @@ import { debounce } from 'common/utils'
     },
     //组件加载完成
     mounted(){
-      //监听item中的图片加载完成的事件监听
-      const refresh = debounce(this.$refs.scroll.refresh,50)
-      this.$bus.$on('itemIamgeLoad',()=>{
-        refresh()
-      })
     },
     methods:{
       /**
