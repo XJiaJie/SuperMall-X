@@ -10,6 +10,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"/>
       <goods-list ref="recommend" :goods="recommeds"/>
 </scroll>
+    <detail-bottom-bar/>
   </div>
 </template>
 
@@ -21,7 +22,7 @@ import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
-
+import DetailBottomBar from './childComps/DetailBottomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
@@ -58,6 +59,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
         DetailParamInfo,
         DetailCommentInfo,
         GoodsList,
+        DetailBottomBar,
         Scroll,
     },
     created(){
@@ -154,7 +156,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
   overflow:hidden;
   position:absolute;
   top:44px;
-  bottom:20px;
+  bottom:58px;
   left:0;
   right:0;
 }
