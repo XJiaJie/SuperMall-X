@@ -116,6 +116,7 @@ import {itemListenerMixin} from 'common/mixin'
              this.currentType = 'sell'
              break
         }
+        //Tabcontrol不一致的解决方法 currentIndex与index相等
         this.$refs.tabControl1.currentIndex = index
         this.$refs.tabControl2.currentIndex = index
       },

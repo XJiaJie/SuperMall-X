@@ -1,14 +1,14 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav"/>
-<scroll class="conent" ref="scroll">
+    <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
+<scroll class="conent" ref="scroll" :probe-type="3" @scroll="contentScroll">
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
       <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad"/>
-      <detail-param-info :paramInfo="paramInfo"/>
-      <detail-comment-info :comment-info="commentInfo"/>
-      <goods-list :goods="recommeds"/>
+      <detail-param-info ref="params" :paramInfo="paramInfo"/>
+      <detail-comment-info ref="comment" :comment-info="commentInfo"/>
+      <goods-list ref="recommend" :goods="recommeds"/>
 </scroll>
   </div>
 </template>
@@ -22,9 +22,11 @@ import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
 
+
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
 import {itemListenerMixin} from 'common/mixin'
+import { debounce } from 'common/utils'
 
 import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
 
@@ -40,6 +42,10 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
             paramInfo:{},
             commentInfo:{},
             recommeds:[],
+            //第一个值是商品的位置0，第二个为参数部分的位置，依次下去。
+            themeTopYs:[],
+            getThemeTopY:null,
+            currentIndex:0,
         }
     },
     mixins:[itemListenerMixin],
@@ -82,13 +88,30 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
         if(data.rate.cRate !==0){
           this.commentInfo = data.rate.list[0]
         }
+        //bug会出现图片没有加载完，offsetTop会不对
+        // this.$nextTick(()=>{
+        //   this.themeTopYs=[]
+        //   this.themeTopYs.push(0);
+        //   this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+        //   this.themeTopYs.push(this.$refs.common.$el.offsetTop);
+        //   this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
+        // })
         })
         //请求推荐数据
         getRecommend().then(res=>{
           this.recommeds=res.data.list
         })
+
+        //给getthemeTopY赋值(给赋值的进行防抖操作)
+        this.getThemeTopY = debounce(()=>{
+          this.themeTopYs=[]
+          this.themeTopYs.push(0);
+          this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+          this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
+        },200)
     },
-    mounted(){
+    mounted(){ 
     },
     destroyed(){
       this.$bus.$off('itemIamgeLoad',this.itemImgListener)
@@ -97,6 +120,25 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
       //监听加载完成，进行高度上的刷新
        imageLoad(){
         this.$refs.scroll.refresh()
+        this.getThemeTopY()
+
+       },
+       titleClick(index){
+        this.$refs.scroll.scrollTo(0, -this.themeTopYs[index],200)
+       },
+       contentScroll(position){
+        //获取Y值
+        const positionY=-position.y
+        //positionY 和主题中的值进行对比
+        let length = this.themeTopYs.length
+        for(let i=0; i<length;i++){
+          if(this.currentIndex !==i &&((i<length -1 && positionY>=this.themeTopYs[i]&&positionY<this.themeTopYs[i+1]) 
+          || (i===length-1 &&positionY>=this.themeTopYs[i]))){
+            this.currentIndex = i;
+            this.$refs.nav.currentIndex = this.currentIndex
+
+          }
+        }
        }
     }
     }

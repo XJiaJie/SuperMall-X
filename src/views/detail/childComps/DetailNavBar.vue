@@ -31,7 +31,8 @@ import NavBar from 'components/common/navbar/NavBar.vue'
     },
     methods:{
         titleClick(index){
-            this.currentIndex=index
+            this.currentIndex=index;
+            this.$emit('titleClick',index);
         },
         //监听点击后返回到home页面
         backClick(){

@@ -73,6 +73,7 @@ import {formatDate} from 'common/utils'
 }
 .info-other{
     margin:10px 0;
+    font-size:14px;
 }
 .info-imgs img{
     width:100px;
