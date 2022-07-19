@@ -119,6 +119,10 @@ import Scroll from 'components/common/scroll/Scroll.vue'
   }
 </script>
 <style lang='' scoped>
-
-
+.conent{
+  height:200px;
+  background-color:pink;
+  overflow:hidden; 
+  /* overflow-y:scroll; */
+}
 </style>

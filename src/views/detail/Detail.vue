@@ -11,7 +11,7 @@
       <goods-list ref="recommend" :goods="recommeds"/>
 </scroll>
 <back-top @click.native="backClick" v-show="isShowBackTop"/>
-    <detail-bottom-bar/>
+    <detail-bottom-bar @addToCart="addToCart"/>
   </div>
 </template>
 
@@ -144,6 +144,20 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
         }
         //是否显示回到顶部
         this.isShowBackTop=(-position.y)>1000
+       },
+       addToCart(){
+        console.log('---');
+         //获取购物车需要展示的信息
+         const product={}
+         product.image=this.topImages[0];
+         product.title=this.goods.title;
+         product.desc=this.goods.desc;
+         product.price=this.goods.realPrice;
+         product.iid=this.iid
+
+         //将商品添加到购物车里
+        //  this.$store.cartList.push(product) i修改必须通过mutation
+        this.$store.commit('addCart',product)
        }
     }
     }

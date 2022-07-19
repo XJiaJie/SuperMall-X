@@ -62,14 +62,18 @@ import {formatDate} from 'common/utils'
 .header-more{
  margin-left:250px;
 }
+.info-user{
+    display:flex;
+}
 .info-user img{
     width:40px;
     height:40px;
 }
 .info-user span{
     margin-left:14px;
+    margin-top:6px;
     font-size:20px;
-    font-family:bold;
+
 }
 .info-other{
     margin:10px 0;
