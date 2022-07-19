@@ -1,4 +1,6 @@
 import { debounce } from 'common/utils'
+import BackTop from 'components/content/backTop/BackTop.vue'
+
 export const itemListenerMixin={
     data(){
         return {
@@ -14,4 +16,22 @@ export const itemListenerMixin={
       this.$bus.$on('itemIamgeLoad',this.itemImgListener
       )
     }
+}
+
+
+export const backTopMixin ={
+  components:{
+    BackTop
+  },
+  data(){
+    return {
+      isShowBackTop:false,
+    }
+  },
+  methods:{
+    backClick(){
+      // 拿到scroll中的ref=scroll，在调用scroll中的scrollTo方法 一二参数x,y ，第三个参数500ms
+      this.$refs.scroll.scrollTo(0,0)
+    },
+  }
 }

@@ -27,17 +27,16 @@
 <script>
 
 import HomeSwiper from './childComps/HomeSwiper'
-import RecommendView from './childComps/RecommendView.vue'
+import RecommendView from './childComps/RecommendView'
 import FeatureView from './childComps/FeatureView'
 
 import NavBar from 'components/common/navbar/NavBar.vue'
-import TabControl from 'components/content/tabControl/TabControl.vue'
+import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
-import BackTop from 'components/content/backTop/BackTop.vue'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin,backTopMixin} from 'common/mixin'
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/SwiperItem'
 
@@ -51,7 +50,6 @@ import {itemListenerMixin} from 'common/mixin'
       TabControl,
       GoodsList,
       Scroll,
-      BackTop,
     },
     // 计算属性
     computed:{
@@ -59,7 +57,7 @@ import {itemListenerMixin} from 'common/mixin'
          return this.goods[this.currentType].list
       }
     },
-    mixins:[itemListenerMixin],
+    mixins:[itemListenerMixin,backTopMixin],
     data(){
      return{
        banners:[],
@@ -70,7 +68,6 @@ import {itemListenerMixin} from 'common/mixin'
         'sell':{page:0, list:[]},
        },
        currentType:'pop',
-       isShowBackTop:false,
        tabOffsetTop:0,
        isTabFixed:false,
        saveY:0,
@@ -120,10 +117,10 @@ import {itemListenerMixin} from 'common/mixin'
         this.$refs.tabControl1.currentIndex = index
         this.$refs.tabControl2.currentIndex = index
       },
-      backClick(){
-        // 拿到scroll中的ref=scroll，在调用scroll中的scrollTo方法 一二参数x,y ，第三个参数500ms
-        this.$refs.scroll.scrollTo(0,0)
-      },
+      //抽取到mixin中 backClick(){
+      //   // 拿到scroll中的ref=scroll，在调用scroll中的scrollTo方法 一二参数x,y ，第三个参数500ms
+      //   this.$refs.scroll.scrollTo(0,0)
+      // },
       conentScroll(position){
         //判断BackTop是否显示
         this.isShowBackTop=(-position.y)>1000
