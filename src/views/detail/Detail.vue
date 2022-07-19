@@ -157,7 +157,9 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
 
          //将商品添加到购物车里
         //  this.$store.cartList.push(product) i修改必须通过mutation
-        this.$store.commit('addCart',product)
+        // mutations的调用：this.$store.commit('addCart',product)
+        //ations的调用
+        this.$store.dispatch('addCart',product)
        }
     }
     }
