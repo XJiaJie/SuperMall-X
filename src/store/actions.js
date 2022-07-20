@@ -13,10 +13,10 @@ export default {
         // }
         //判断oldPrduct
         if(oldProduct){
-            // oldProduct.count+=1
+            oldProduct.count+=1
             context.commit('addCounter',oldProduct)
         }else{
-            // payload.count = 1
+            payload.count = 1
             context.commit('addToCart',payload)
         }
 

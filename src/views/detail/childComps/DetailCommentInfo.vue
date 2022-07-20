@@ -73,6 +73,7 @@ import {formatDate} from 'common/utils'
     margin-left:14px;
     margin-top:6px;
     font-size:20px;
+    font-weight:700;
 
 }
 .info-other{

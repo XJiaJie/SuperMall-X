@@ -146,7 +146,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
         this.isShowBackTop=(-position.y)>1000
        },
        addToCart(){
-        console.log('---');
+        // console.log('---');
          //获取购物车需要展示的信息
          const product={}
          product.image=this.topImages[0];
@@ -156,7 +156,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
          product.iid=this.iid
 
          //将商品添加到购物车里
-        //  this.$store.cartList.push(product) i修改必须通过mutation
+        //  this.$store.cartList.push(product) 修改必须通过mutation
         // mutations的调用：this.$store.commit('addCart',product)
         //ations的调用
         this.$store.dispatch('addCart',product)

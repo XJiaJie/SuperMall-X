@@ -1,6 +1,6 @@
 <template>
 <div id="categroy">
-<nav-bar><div slot="center">商品</div></nav-bar>
+<nav-bar><div slot="center">分类</div></nav-bar>
 <scroll class="conent" >
   <ul >
   <li>分类列表1</li>
