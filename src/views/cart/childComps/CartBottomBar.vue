@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-bar">
     <div class="check-button">
-        <check-button class="button"/>
+        <check-button class="button" :is-checked="isSelectAll"/>
         <span>全选</span>
     </div>
     <div class="total-price">
@@ -30,6 +30,20 @@ import CheckButton from 'components/content/checkButton/CheckButton.vue'
         },
         checkLength(){
             return this.$store.state.cartList.filter(item=>item.checked).length
+        },
+        isSelectAll(){
+            if(this.$store.state.cartList.length===0) return false
+            //filter方法
+            //return !(this.$store.state.cartList.filter(item=> !item.checked).length)
+            //find方法
+            //return !this.$store.state.cartList.find(item=>!item.checked)
+           //普通遍历方法
+           for(let item of this.$store.state.cartList){
+            if(!item.checked){
+                return false
+            }
+           }
+           return true 
         }
     }
   }
@@ -48,15 +62,16 @@ import CheckButton from 'components/content/checkButton/CheckButton.vue'
     font-size:18px;
     font-weight:550;
     line-height:40px;
-    width:80px;
+    width:100px
 }
 .check-button span{
-    flex:1;
+    margin-left:20px;
 }
 .button{
     margin-top:10px;
     margin-left:5px;
-    flex:1;
+    width:20px;
+    height:20px;
 }.total-price{
     line-height:40px;
     margin-left:20px;

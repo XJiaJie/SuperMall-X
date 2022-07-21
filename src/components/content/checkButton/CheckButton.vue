@@ -1,6 +1,6 @@
 <template>
   <div class="check-button" :class="{active:isChecked}" >
-  <div class="null"  ></div>
+  <div class="null"></div>
    <!-- <span v-if="isShow"><img src="~assets/img/cart/billcheckg.png" alt=""></span> 
     <span v-else><img src="~assets/img/cart/billcheck.png" alt=""></span> -->
   </div>
@@ -21,12 +21,8 @@
 </script>
 <style lang='' scoped>
 .check-button{
-     border-radius:50%;
-}
-.check-button img{
- width:25px;
- height:25px;
-
+ width:20px;
+ height:20px;
 }
 .null{
   width:20px;
