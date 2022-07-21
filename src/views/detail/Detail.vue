@@ -12,6 +12,7 @@
 </scroll>
 <back-top @click.native="backClick" v-show="isShowBackTop"/>
     <detail-bottom-bar @addToCart="addToCart"/>
+    <!-- <toast></toast> -->
   </div>
 </template>
 
@@ -27,10 +28,13 @@ import DetailBottomBar from './childComps/DetailBottomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
+// import Toast from 'components/common/toast/Toast'
 import {itemListenerMixin , backTopMixin} from 'common/mixin'
 import { debounce } from 'common/utils'
 
 import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
+
+// import { mapActions } from 'vuex'
 
   export default {
     name:'Detail',
@@ -61,6 +65,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
         DetailCommentInfo,
         GoodsList,
         DetailBottomBar,
+        // Toast,
         Scroll,
     },
     created(){
@@ -120,6 +125,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
       this.$bus.$off('itemIamgeLoad',this.itemImgListener)
     },
     methods:{
+      // ...mapActions(['addCart']),
       //监听加载完成，进行高度上的刷新
        imageLoad(){
         this.$refs.scroll.refresh()
@@ -158,8 +164,13 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
          //将商品添加到购物车里
         //  this.$store.cartList.push(product) 修改必须通过mutation
         // mutations的调用：this.$store.commit('addCart',product)
+        //mapActions的使用   this.addToCart(product).then((res)=>{
+        //   console.log(res);
+        // })
         //ations的调用
-        this.$store.dispatch('addCart',product)
+        this.$store.dispatch('addCart',product).then((res)=>{
+          this.$toast.show(res,2000)
+        })
        }
     }
     }

@@ -1,13 +1,13 @@
 <template>
   <div class="bottom-bar">
     <div class="check-button">
-        <check-button class="button" :is-checked="isSelectAll"/>
+        <check-button class="button" :is-checked="isSelectAll" @click.native="checkClick"/>
         <span>全选</span>
     </div>
     <div class="total-price">
         合计:{{totalPrice}}
     </div>
-    <div class="calculate">
+    <div class="calculate" @click="calcClick">
         去计算({{checkLength}})
     </div>
   </div>
@@ -31,6 +31,7 @@ import CheckButton from 'components/content/checkButton/CheckButton.vue'
         checkLength(){
             return this.$store.state.cartList.filter(item=>item.checked).length
         },
+        //全部选中状态
         isSelectAll(){
             if(this.$store.state.cartList.length===0) return false
             //filter方法
@@ -44,6 +45,22 @@ import CheckButton from 'components/content/checkButton/CheckButton.vue'
             }
            }
            return true 
+        },
+        
+    },
+    methods:{
+        checkClick(){
+           if(this.isSelectAll){
+            //全部选中
+            this.$store.state.cartList.forEach(item=>item.checked = false)
+           }else{//部分或者全部不选中
+            this.$store.state.cartList.forEach(item=>item.checked = true)
+           }
+        },
+        calcClick(){
+            if(!this.isSelectAll){
+                this.$toast.show('请选择购买商品',2000)
+            }
         }
     }
   }
