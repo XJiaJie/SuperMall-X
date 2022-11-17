@@ -26,6 +26,7 @@ export class Goods {
       this.services = services;
       this.realPrice = itemInfo.lowNowPrice;
     }
+
   }
 
 export class GoodsParam{

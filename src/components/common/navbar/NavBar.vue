@@ -21,7 +21,8 @@
     height:44px;
     text-align:center;
     font-size:20px;
-    box-shadow:0 2px 4px rgba(100,100,100, 0.1)
+    box-shadow:0 2px 4px rgba(100,100,100, 0.1);
+
 }
   .left, .right{
      width:80px;

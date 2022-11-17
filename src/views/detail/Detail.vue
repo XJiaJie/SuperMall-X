@@ -74,7 +74,7 @@ import { getDetail, Goods,Shop ,GoodsParam, getRecommend} from 'network/detail'
 
         //请求详情页的数据
         getDetail(this.iid).then(res=>{
-            console.log(res);
+            // console.log(res);
         //获取顶图的topImages
         const data = res.result
         this.topImages=data.itemInfo.topImages

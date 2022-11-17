@@ -13,8 +13,7 @@ export const itemListenerMixin={
       //对监听事件进行保存
       this.itemImgListener=()=>{
         refresh()}
-      this.$bus.$on('itemIamgeLoad',this.itemImgListener
-      )
+      this.$bus.$on('itemIamgeLoad',this.itemImgListener)
     }
 }
 

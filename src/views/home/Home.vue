@@ -84,7 +84,7 @@ import {itemListenerMixin,backTopMixin} from 'common/mixin'
 
       this.$bus.$off('itemIamgeLoad',this.itemImgListener )
     },
-    //created作用组件创建完就开始监听
+    //created作用组件实例创建完就开始监听
     created(){
       //methods中的getHomeMultidata方法，来请求多个数据
      this.getHomeMultidata()
@@ -93,8 +93,8 @@ import {itemListenerMixin,backTopMixin} from 'common/mixin'
      this.getHomeGoods('new')
      this.getHomeGoods('sell')
     },
-    //组件加载完成
-    mounted(){
+    //组件已经挂载到实例之后
+    mounted(){//通过mixin混入。
     },
     methods:{
       /**
@@ -129,6 +129,7 @@ import {itemListenerMixin,backTopMixin} from 'common/mixin'
         this.isTabFixed = (-position.y)>this.tabOffsetTop
       },
       loadMore(){
+        //监听图片加载完成
         this.getHomeGoods(this.currentType)
       },
       swiperImageLoad(){
